@@ -19,7 +19,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ✅ CORS setup
-const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174'];
+const allowedOrigins = ['http://localhost:5173', 'http://localhost:5174', 'https://mern-stack-integration-yuti136-n5y3.vercel.app'];
 app.use(
   cors({
     origin: (origin, callback) => {
