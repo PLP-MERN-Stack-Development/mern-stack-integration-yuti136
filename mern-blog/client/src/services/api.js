@@ -1,7 +1,7 @@
 // src/services/api.js
 
-// 🔹 Backend API URL
-const API_BASE = "http://localhost:5000/api";
+// 🔹 Backend API URL. Initially, the const API_BASE before deployment was "http://localhost:5000/api"
+const API_BASE = "https://mern-stack-integration-yuti136.onrender.com";
 
 /**
  * 🔐 Fetch Clerk JWT token from the browser
