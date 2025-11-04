@@ -1,7 +1,8 @@
 // src/services/api.js
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 // 🔹 Backend API URL. Initially, the const API_BASE before deployment was "http://localhost:5000/api"
-const VITE_API_BASE_URL = "https://mern-stack-integration-yuti136.onrender.com";
+
 
 /**
  * 🔐 Fetch Clerk JWT token from the browser
@@ -77,18 +78,18 @@ async function authorizedFetch(url, options = {}) {
 export const NotesAPI = {
   /** Get all posts */
   async getPosts() {
-    return authorizedFetch(`${VITE_API_BASE_URL}/posts`);
+    return authorizedFetch(`${API_BASE}/posts`);
   },
 
   /** Get single post by ID or slug */
   async getPost(id) {
-    return authorizedFetch(`${VITE_API_BASE_URL}/posts/${id}`);
+    return authorizedFetch(`${API_BASE}/posts/${id}`);
   },
 
   /** Create a new post */
   async createPost(data) {
     console.log("Submitting post to backend:", data);
-    return authorizedFetch(`${VITE_API_BASE_URL}/posts`, {
+    return authorizedFetch(`${API_BASE}/posts`, {
       method: "POST",
       body: JSON.stringify(data),
     });
@@ -97,7 +98,7 @@ export const NotesAPI = {
   /** Update an existing post */
   async updatePost(id, data) {
     console.log("Updating post:", id, data);
-    return authorizedFetch(`${VITE_API_BASE_URL}/posts/${id}`, {
+    return authorizedFetch(`${API_BASE}/posts/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
     });
@@ -106,7 +107,7 @@ export const NotesAPI = {
   /** Delete a post */
   async deletePost(id) {
     console.log("Deleting post:", id);
-    return authorizedFetch(`${VITE_API_BASE_URL}/posts/${id}`, {
+    return authorizedFetch(`${API_BASE}/posts/${id}`, {
       method: "DELETE",
     });
   },
