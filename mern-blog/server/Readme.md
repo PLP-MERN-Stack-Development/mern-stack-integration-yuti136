@@ -8,7 +8,7 @@ The app allows users to view and manage blog posts with authentication handled v
 ## 🚀 Live Demo
 
 - **Frontend (Deployed on Vercel):** https://mern-stack-integration-yuti136-n5y3.vercel.app/ . Also runs locally on  http://localhost:5173/
-- **Backend (Currently running locally):** http://localhost:5000  
+- **Backend (Currently running locally):** http://localhost:5000. Also deployed on Render and running on https://mern-stack-integration-yuti136.onrender.com  
 
 ---
 
