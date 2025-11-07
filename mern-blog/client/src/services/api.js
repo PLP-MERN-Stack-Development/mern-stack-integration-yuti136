@@ -1,7 +1,8 @@
 // src/services/api.js
 
-// 🔹 Backend API URL
-const API_BASE = "http://localhost:5000/api";
+// ✅ Use environment variable for backend URL
+const API_BASE =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 /**
  * 🔐 Fetch Clerk JWT token from the browser
@@ -14,15 +15,12 @@ async function getAuthToken() {
     }
 
     const session = window.Clerk.session;
-
     if (!session) {
       console.warn("⚠️ No active Clerk session found");
       return null;
     }
 
-    // Replace "default" with your JWT template name if different
     const token = await session.getToken({ template: "default" });
-
     if (!token) {
       console.warn("⚠️ Clerk JWT token not found — user might not be signed in");
       return null;
@@ -80,14 +78,14 @@ export const NotesAPI = {
     return authorizedFetch(`${API_BASE}/posts`);
   },
 
-  /** Get single post by ID or slug */
+  /** Get single post by ID */
   async getPost(id) {
     return authorizedFetch(`${API_BASE}/posts/${id}`);
   },
 
   /** Create a new post */
   async createPost(data) {
-    console.log("Submitting post to backend:", data);
+    console.log("📝 Submitting post to backend:", data);
     return authorizedFetch(`${API_BASE}/posts`, {
       method: "POST",
       body: JSON.stringify(data),
@@ -96,7 +94,7 @@ export const NotesAPI = {
 
   /** Update an existing post */
   async updatePost(id, data) {
-    console.log("Updating post:", id, data);
+    console.log("✏️ Updating post:", id, data);
     return authorizedFetch(`${API_BASE}/posts/${id}`, {
       method: "PUT",
       body: JSON.stringify(data),
@@ -105,7 +103,7 @@ export const NotesAPI = {
 
   /** Delete a post */
   async deletePost(id) {
-    console.log("Deleting post:", id);
+    console.log("🗑️ Deleting post:", id);
     return authorizedFetch(`${API_BASE}/posts/${id}`, {
       method: "DELETE",
     });
