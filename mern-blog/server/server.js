@@ -14,22 +14,26 @@ const errorHandler = require("./middleware/errorHandler");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// ✅ CORS setup for production and local development
+// ✅ CORS setup for both local and production
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:5174",
-  "https://mern-stack-integration-yuti136-n5y3.vercel.app"
+  "https://mern-stack-integration-yuti136-n5y3.vercel.app", // your Vercel frontend
 ];
 
 app.use(
   cors({
-    origin: (origin, callback) => {
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
       if (!origin || allowedOrigins.includes(origin)) {
-        return callback(null, true);
+        callback(null, true);
+      } else {
+        console.warn(`❌ Blocked by CORS: ${origin}`);
+        callback(new Error("CORS policy: Origin not allowed"));
       }
-      console.warn(`❌ Blocked by CORS: ${origin}`);
-      return callback(new Error("CORS policy: This origin is not allowed"));
     },
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
@@ -43,10 +47,10 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // ✅ Root health route
 app.get("/", (req, res) => {
-  res.send("✅ MERN Blog API running successfully on Render & Clerk configured!");
+  res.send("✅ MERN Blog API is running successfully on Render with Clerk configured!");
 });
 
-// ✅ Test route (protected)
+// ✅ Test protected route
 app.get("/api/test-auth", ClerkExpressRequireAuth(), (req, res) => {
   res.json({
     message: "Authenticated!",
@@ -70,9 +74,7 @@ mongoose
   })
   .then(() => {
     console.log("✅ Connected to MongoDB");
-    app.listen(PORT, () =>
-      console.log(`🚀 Server running at http://localhost:${PORT}`)
-    );
+    app.listen(PORT, () => console.log(`🚀 Server running at http://localhost:${PORT}`));
   })
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
