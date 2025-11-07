@@ -2,7 +2,7 @@
 
 // ✅ Use environment variable for backend URL
 const API_BASE =
-  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  import.meta.env.VITE_API_BASE_URL;
 
 /**
  * 🔐 Fetch Clerk JWT token from the browser
